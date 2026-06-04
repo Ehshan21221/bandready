@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BandReady – IELTS Mock Test</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght=700;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght=400;600&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div id="screen-home" class="screen active">
+    <nav class="top-nav">
+      <div class="logo">Band<em>Ready</em></div>
+      <div class="nav-links">
+        <a onclick="goHome()">Home</a>
+        <a onclick="startTest()">Take Test</a>
+      </div>
+    </nav>
+
+    <div class="hero">
+      <div class="hero-pill">Free IELTS Practice Platform</div>
+      <h1>Prepare for <em>Band 7+</em><br>with Full Mock Tests</h1>
+      <p>Practice all four IELTS modules with realistic exam conditions, timed sections, and instant band score estimates.</p>
+      <div class="hero-btns">
+        <button class="btn btn-gold btn-lg" onclick="startTest()">Start Full Mock Test</button>
+        <button class="btn btn-ghost btn-lg" onclick="startTest()">Choose a Module</button>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat"><span class="stat-n">4</span><span class="stat-l">Modules</span></div>
+      <div class="stat"><span class="stat-n">40+</span><span class="stat-l">Questions</span></div>
+      <div class="stat"><span class="stat-n">3.5h</span><span class="stat-l">Exam Time</span></div>
+      <div class="stat"><span class="stat-n">Band 9</span><span class="stat-l">Max Score</span></div>
+    </div>
+
+    <div class="home-modules">
+      <div class="sec-label">Test Modules</div>
+      <h2 class="sec-title">Four Sections, One Platform</h2>
+      <p class="sec-sub">Each module mirrors the real IELTS Academic exam in format, question types, and difficulty.</p>
+      <div class="module-grid">
+        <div class="mod-card" onclick="startModule('listening')">
+          <div class="mod-icon ic-l">🎧</div>
+          <h3>Listening</h3>
+          <p>10 questions across 2 sections with written transcripts simulating IELTS audio.</p>
+          <div class="mod-tags"><span class="tag">30 min</span><span class="tag">10 Q</span><span class="tag">MCQ + Fill</span></div>
+        </div>
+        <div class="mod-card" onclick="startModule('reading')">
+          <div class="mod-icon ic-r">📖</div>
+          <h3>Reading</h3>
+          <p>Full academic passage in split-panel view — scroll passage and questions independently.</p>
+          <div class="mod-tags"><span class="tag">60 min</span><span class="tag">13 Q</span><span class="tag">Academic</span></div>
+        </div>
+        <div class="mod-card" onclick="startModule('writing')">
+          <div class="mod-icon ic-w">✍️</div>
+          <h3>Writing</h3>
+          <p>Task 1 graph description and Task 2 essay with live word counting.</p>
+          <div class="mod-tags"><span class="tag">60 min</span><span class="tag">2 Tasks</span><span class="tag">Essay</span></div>
+        </div>
+        <div class="mod-card" onclick="startModule('speaking')">
+          <div class="mod-icon ic-s">🗣️</div>
+          <h3>Speaking</h3>
+          <p>Parts 1, 2 and 3 with cue cards and follow-up questions for self-assessed practice.</p>
+          <div class="mod-tags"><span class="tag">11–14 min</span><span class="tag">3 Parts</span><span class="tag">Prompts</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-strip">
+      <h2>Ready to find your Band Score?</h2>
+      <p>Take the full timed test and get instant results with a detailed answer review.</p>
+      <button class="btn btn-gold btn-lg" onclick="startTest()">Begin Full Test →</button>
+    </div>
+    <footer>© 2025 <span>BandReady</span> — Free IELTS Mock Test Platform. Not affiliated with the British Council or IDP.</footer>
+  </div>
+
+  <div id="screen-select" class="screen">
+    <nav class="top-nav">
+      <div class="logo">Band<em>Ready</em></div>
+      <div class="nav-links"><a onclick="goHome()">← Home</a></div>
+    </nav>
+    <div class="select-container">
+      <div class="sec-label">Choose Module</div>
+      <h2 class="sec-title-select">What would you like to practise?</h2>
+      <p class="sec-sub">Select one section or start the full sequential test from the home page.</p>
+      <div class="module-grid">
+        <div class="mod-card" onclick="startModule('listening')"><div class="mod-icon ic-l">🎧</div><h3>Listening</h3><p>30 min · 10 questions</p></div>
+        <div class="mod-card" onclick="startModule('reading')"><div class="mod-icon ic-r">📖</div><h3>Reading</h3><p>60 min · 13 questions</p></div>
+        <div class="mod-card" onclick="startModule('writing')"><div class="mod-icon ic-w">✍️</div><h3>Writing</h3><p>60 min · 2 tasks</p></div>
+        <div class="mod-card" onclick="startModule('speaking')"><div class="mod-icon ic-s">🗣️</div><h3>Speaking</h3><p>11–14 min · 3 parts</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="screen-listening" class="screen flex-screen">
+    <div class="exam-nav">
+      <div class="exam-nav-left">
+        <span class="section-badge">🎧 Listening</span>
+        <span class="exam-section-name">Sections 1 &amp; 2 — Social Contexts</span>
+      </div>
+      <div class="timer-wrapper">
+        <div class="timer" id="timer-listening">⏱ 30:00</div>
+      </div>
+    </div>
+
+    <div class="single-col">
+      <div class="single-inner">
+        <div class="section-header-banner">
+          <strong class="mono-label">SECTION 1</strong>
+          <span class="section-subtext">A phone conversation about booking a sports centre</span>
+        </div>
+
+        <div class="transcript-box">
+          <div class="transcript-header">📝 Audio Transcript — Section 1</div>
+          <strong>Receptionist:</strong> Hello, Riverside Sports Centre. How can I help you?<br>
+          <strong>Caller:</strong> Hi, I'd like to book a badminton court for Saturday morning, please.<br>
+          <strong>Receptionist:</strong> Of course. Can I take your name?<br>
+          <strong>Caller:</strong> It's Ahmed Hassan.<br>
+          <strong>Receptionist:</strong> And what time were you thinking? We have 9 AM, 10:30 AM, or noon available.<br>
+          <strong>Caller:</strong> 10:30 would be great, thanks. How many courts are available at that time?<br>
+          <strong>Receptionist:</strong> We have three courts available. The booking fee is £8 per hour per court.<br>
+          <strong>Caller:</strong> Perfect. We'll take court number 2. We'll be four players. Do you hire out rackets?<br>
+          <strong>Receptionist:</strong> Yes, racket hire is £2 each. Shuttlecocks are included. You'll need a valid membership card or pay a £5 guest fee per person.<br>
+          <strong>Caller:</strong> We're all members. Is there parking on-site?<br>
+          <strong>Receptionist:</strong> Yes, free parking for members in the east car park. The postcode is BR4 7WQ.<br>
+          <strong>Caller:</strong> Can I pay by card when we arrive?<br>
+          <strong>Receptionist:</strong> Absolutely. All major cards accepted. Your booking reference is RS-4492.
+        </div>
+
+        <div class="q-block" id="qblock-l1">
+          <div class="q-block-head"><div class="q-num-badge">1</div><span class="q-type-tag">Multiple Choice</span></div>
+          <div class="q-block-body">
+            <p class="q-text">What time does Ahmed book the badminton court?</p>
+            <div class="opts">
+              <label class="opt"><input type="radio" name="l1" value="A"> A) 9:00 AM</label>
+              <label class="opt"><input type="radio" name="l1" value="B"> B) 10:30 AM</label>
+              <label class="opt"><input type="radio" name="l1" value="C"> C) 12:00 noon</label>
+              <label class="opt"><input type="radio" name="l1" value="D"> D) 11:00 AM</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-block" id="qblock-l2">
+          <div class="q-block-head"><div class="q-num-badge">2</div><span class="q-type-tag">Fill in the Blank</span></div>
+          <div class="q-block-body">
+            <p class="q-text">The booking fee for the court is £<input class="inline-in" id="l2" placeholder="?"> per hour.</p>
+          </div>
+        </div>
+
+        <div class="q-block" id="qblock-l3">
+          <div class="q-block-head"><div class="q-num-badge">3</div><span class="q-type-tag">Fill in the Blank</span></div>
+          <div class="q-block-body">
+            <p class="q-text">The postcode of the sports centre is <input class="inline-in" id="l3" style="width:140px" placeholder="?">.</p>
+          </div>
+        </div>
+
+        <div class="q-block" id="qblock-l4">
+          <div class="q-block-head"><div class="q-num-badge">4</div><span class="q-type-tag">Multiple Choice</span></div>
+          <div class="q-block-body">
+            <p class="q-text">What is Ahmed's booking reference number?</p>
+            <div class="opts">
+              <label class="opt"><input type="radio" name="l4" value="A"> A) RS-4294</label>
+              <label class="opt"><input type="radio" name="l4" value="B"> B) RS-4492</label>
+              <label class="opt"><input type="radio" name="l4" value="C"> C) RV-4492</label>
+              <label class="opt"><input type="radio" name="l4" value="D"> D) RS-4942</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-header-banner mt-8">
+          <strong class="mono-label">SECTION 2</strong>
+          <span class="section-subtext">A community talk about a new recycling initiative</span>
+        </div>
+
+        <div class="transcript-box">
+          <div class="transcript-header">📝 Audio Transcript — Section 2</div>
+          <strong>Speaker:</strong> Good evening, everyone. Thank you for coming to our monthly Green Community meeting. Tonight I want to talk about our new recycling initiative — how residents in Oakdale can reduce household waste by up to 60%.<br><br>
+          First, the council has placed new blue bins outside the library, the post office, and the train station for glass recycling only. Please do not put plastic in these. Food waste should go in the brown bins, collected every Tuesday and Friday.<br><br>
+          We've also launched a composting programme. You can pick up a free home composting kit from the council offices on Bridge Street — open Monday to Thursday, 9 to 5. The kits include a compost bin, instructions, and a guide on what can and cannot be composted.<br><br>
+          Finally, our electronics collection day is on the 15th of next month in the community hall car park, from 8 AM to 2 PM. Old phones, laptops, cables — all accepted. You'll receive a tax receipt if you donate.
+        </div>
+
+        <div class="q-block" id="qblock-l5">
+          <div class="q-block-head"><div class="q-num-badge">5</div><span class="q-type-tag">Multiple Choice</span></div>
+          <div class="q-block-body">
+            <p class="q-text">The blue bins placed around Oakdale are intended for:</p>
+            <div class="opts">
+              <label class="opt"><input type="radio" name="l5" value="A"> A) Plastic recycling</label>
+              <label class="opt"><input type="radio" name="l5" value="B"> B) Glass recycling only</label>
+              <label class="opt"><input type="radio" name="l5" value="C"> C) Mixed recyclables</label>
+              <label class="opt"><input type="radio" name="l5" value="D"> D) Food waste</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-block" id="qblock-l6">
+          <div class="q-block-head"><div class="q-num-badge">6</div><span class="q-type-tag">Fill in the Blank</span></div>
+          <div class="q-block-body">
+            <p class="q-text">Food waste is collected every <input class="inline-in" id="l6" style="width:190px" placeholder="days of the week"> each week.</p>
+          </div>
+        </div>
+
+        <div class="q-block" id="qblock-l7">
+          <div class="q-block-head"><div class="q-num-badge">7</div><span class="q-type-tag">Fill in the Blank</span></div>
+          <div class="q-block-body">
+            <p class="q-text">The composting kits are available from the council offices on <input class="inline-in" id="l7" style="width:140px" placeholder="?"> Street.</p>
+          </div>
+        </div>
+
+        <div class="q-block" id="qblock-l8">
+          <div class="q-block-head"><div class="q-num-badge">8</div><span class="q-type-tag">Multiple Choice</span></div>
+          <div class="q-block-body">
+            <p class="q-text">The electronics collection day takes place at:</p>
+            <div class="opts">
+              <label class="opt"><input type="radio" name="l8" value="A"> A) The library</label>
+              <label class="opt"><input type="radio" name="l8" value="B"> B) Bridge Street council offices</label>
+              <label class="opt"><input type="radio" name="l8" value="C)"></label> C) The community hall car park
+              <label class="opt"><input type="radio" name="l8" value="D"> D) The train station</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-block" id="qblock-l9">
+          <div class="q-block-head"><div class="q-num-badge">9</div><span class="q-type-tag">True / False / Not Given</span></div>
+          <div class="q-block-body">
+            <p class="q-text">Donors at the electronics collection day will receive a tax receipt.</p>
+            <div class="opts">
+              <label class="opt"><input type="radio" name="l9" value="TRUE"> TRUE</label>
+              <label class="opt"><input type="radio" name="l9" value="FALSE"> FALSE</label>
+              <label class="opt"><input type="radio" name="l9" value="NG"> NOT GIVEN</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-block" id="qblock-l10">
+          <div class="q-block-head"><div class="q-num-badge">10</div><span class="q-type-tag">Multiple Choice</span></div>
+          <div class="q-block-body">
+            <p class="q-text">The speaker claims the new recycling initiative can reduce household waste by up to:</p>
+            <div class="opts">
+              <label class="opt"><input type="radio" name="l10" value="A"> A) 40%</label>
+              <label class="opt"><input type="radio" name="l10" value="B"> B) 50%</label>
+              <label class="opt"><input type="radio" name="l10" value="C"> C) 60%</label>
+              <label class="opt"><input type="radio" name="l10" value="D"> D) 70%</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exam-footer">
+      <div class="q-matrix" id="matrix-l"></div>
+      <button class="btn btn-primary" onclick="submitListening()">Submit Listening →</button>
+    </div>
+  </div>
+
+  <div id="screen-reading" class="screen flex-screen">
+    <div class="exam-nav">
+      <div class="exam-nav-left">
+        <span class="section-badge">📖 Reading</span>
+        <span class="exam-section-name">Passage 1 — Academic Text</span>
+      </div>
+      <div class="timer" id="timer-reading">⏱ 60:00</div>
+    </div>
+
+    <div class="exam-body">
+      <div class="split-left">
+        <div class="passage-body">
+          <p class="passage-title">The Microbiome Revolution: How Gut Bacteria Shape Human Health</p>
+          <p><span class="para-mark">A</span>Inside the human gastrointestinal tract lives an extraordinarily complex community of microorganisms collectively known as the gut microbiome. Comprising more than 100 trillion individual bacteria, viruses, fungi, and archaea, this ecosystem contains approximately 150 times more genes than the human genome itself. Far from being passive passengers, these microbes engage in a sophisticated, bidirectional relationship with their host, influencing not merely digestion but an astonishing range of physiological and psychological processes.</p>
+          <p><span class="para-mark">B</span>For much of medical history, bacteria were viewed primarily through the lens of disease. The germ theory of the 19th century, while revolutionary in its time, inadvertently fostered a reductionist view of microorganisms as pathogens to be eliminated. Antibiotics — arguably the most transformative medical innovation of the 20th century — were deployed widely and often indiscriminately. Researchers now recognise that this approach came with a hidden cost: the disruption of the microbial communities that have co-evolved with humans over millions of years.</p>
+          <p><span class="para-mark">C</span>The modern microbiome field was catalysed by the Human Microbiome Project, a landmark initiative launched by the United States National Institutes of Health in 2007. The project aimed to characterise the microbial communities residing in and on the human body and to examine their role in human health and disease. What emerged was a portrait of enormous complexity and remarkable individuality — no two people share exactly the same microbial composition, even identical twins raised in the same household.</p>
+          <p><span class="para-mark">D</span>Among the most striking findings is the so-called gut-brain axis: a bidirectional communication network linking the central nervous system with the enteric nervous system of the gastrointestinal tract. The vagus nerve serves as a primary highway for this communication, transmitting signals in both directions. Studies have found that germ-free mice — animals raised in sterile conditions with no gut bacteria — display markedly abnormal behaviours including heightened anxiety and impaired social interaction. When the microbiomes of anxious mice were transplanted into relaxed mice, the recipients began exhibiting anxiety-like behaviours, strongly implicating the microbiome in regulating mood and temperament.</p>
+          <p><span class="para-mark">E</span>The clinical implications of this research are only beginning to be explored. Dysbiosis — an imbalance in the gut microbial community — has been associated with conditions as varied as inflammatory bowel disease, type 2 diabetes, obesity, rheumatoid arthritis, and depression. Faecal microbiota transplantation (FMT), in which stool from a healthy donor is transferred to a recipient, has already proven highly effective for treating recurrent <em>Clostridioides difficile</em> infections. Researchers are now investigating FMT as a potential treatment for conditions including Parkinson's disease and autism spectrum disorder, though the evidence remains preliminary.</p>
+          <p><span class="para-mark">F</span>Diet is widely acknowledged as the most powerful modifiable factor influencing the microbiome. A diet rich in diverse plant foods — vegetables, legumes, whole grains, nuts, and fermented foods — tends to support a diverse and resilient microbial community. Conversely, diets high in processed foods, refined sugar, and saturated fat have been linked to reduced microbial diversity, a state increasingly associated with poor health outcomes. The Mediterranean diet, in particular, has attracted attention for its apparent ability to foster a favourable microbial profile.</p>
+          <p><span class="para-mark">G</span>Nevertheless, significant caution is warranted in this field. The microbiome is extraordinarily sensitive to methodological variation, making cross-study comparisons difficult. Many findings have emerged from animal studies that do not straightforwardly translate to humans. Furthermore, correlation does not imply causation: it remains unclear in many cases whether microbial imbalance causes disease or is a downstream consequence of it. As microbiologist Dr. Justin Sonnenburg has noted, "We are still in the early days of a science that has the potential to transform medicine — but we must resist the temptation to overstate what we currently know."</p>
+        </div>
+      </div>
+
+      <div class="split-right">
+        <div class="qs-stack">
+          <div class="instruction-box"><strong>Questions 1–4 · True / False / Not Given</strong><br>Do the following statements agree with the information in the passage?</div>
+          <div class="q-block" id="qblock-r1">
+            <div class="q-block-head"><div class="q-num-badge">1</div><span class="q-type-tag">True / False / Not Given</span></div>
+            <div class="q-block-body">
+              <p class="q-text">The gut microbiome contains more genetic material than the human genome.</p>
+              <div class="opts">
+                <label class="opt"><input type="radio" name="r1" value="TRUE"> TRUE</label>
+                <label class="opt"><input type="radio" name="r1" value="FALSE"> FALSE</label>
+                <label class="opt"><input type="radio" name="r1" value="NG"> NOT GIVEN</label>
+              </div>
+            </div>
+          </div>
+          <div class="q-block" id="qblock-r2">
+            <div class="q-block-head"><div class="q-num-badge">2</div><span class="q-type-tag">True / False / Not Given</span></div>
+            <div class="q-block-body">
+              <p class="q-text">The Human Microbiome Project was launched by European researchers.</p>
+              <div class="opts">
+                <label class="opt"><input type="radio" name="r2" value="TRUE"> TRUE</label>
+                <label class="opt"><input type="radio" name="r2" value="FALSE"> FALSE</label>
+                <label class="opt"><input type="radio" name="r2" value="NG"> NOT GIVEN</label>
+              </div>
+            </div>
+          </div>
+          <div class="q-block" id="qblock-r3">
+            <div class="q-block-head"><div class="q-num-badge">3</div><span class="q-type-tag">True / False / Not Given</span></div>
+            <div class="q-block-body">
+              <p class="q-text">Identical twins always share exactly the same microbial composition.</p>
+              <div class="opts">
+                <label class="opt"><input type="radio" name="r3" value="TRUE"> TRUE</label>
+                <label class="opt"><input type="radio" name="r3" value="FALSE"> FALSE</label>
+                <label class="opt"><input type="radio" name="r3" value="NG"> NOT GIVEN</label>
+              </div>
+            </div>
+          </div>
+          <div class="q-block" id="qblock-r4">
+            <div class="q-block-head"><div class="q-num-badge">4</div><span class="q-type-tag">True / False / Not Given</span></div>
+            <div class="q-block-body">
+              <p class="q-text">Germ-free mice displayed heightened anxiety and impaired social interaction.</p>
+              <div class="opts">
+                <label class="opt"><input type="radio" name="r4" value="TRUE"> TRUE</label>
+                <label class="opt"><input type="radio" name="r4" value="FALSE"> FALSE</label>
+                <label class="opt"><input type="radio" name="r4" value="NG"> NOT GIVEN</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="instruction-box mt-8"><strong>Questions 5–7 · Matching Headings</strong><br>Choose the correct heading for paragraphs D, E, and F from the list below (i–vii).</div>
+          <div class="q-block pad-14">
+            <div class="headings-list-box">
+              <strong>List of Headings:</strong><br>
+              i. The history of antibiotic overuse<br>
+              ii. The connection between gut bacteria and brain function<br>
+              iii. Clinical applications and emerging treatments<br>
+              iv. The role of diet in shaping the microbiome<br>
+              v. Caution and limitations in current research<br>
+              vi. The founding of the Human Microbiome Project<br>
+              vii. Genetic composition of the microbiome
+            </div>
+            <div class="q-block" id="qblock-r5">
+              <div class="q-block-head"><div class="q-num-badge">5</div><span class="q-type-tag">Matching Heading — Paragraph D</span></div>
+              <div class="q-block-body">
+                <select class="text-in" id="r5">
+                  <option value="">— Select heading —</option>
+                  <option value="i">i</option><option value="ii">ii</option><option value="iii">iii</option>
+                  <option value="iv">iv</option><option value="v">v</option><option value="vi">vi</option><option value="vii">vii</option>
+                </select>
+              </div>
+            </div>
+            <div class="q-block mt-10" id="qblock-r6">
+              <div class="q-block-head"><div class="q-num-badge">6</div><span class="q-type-tag">Matching Heading — Paragraph E</span></div>
+              <div class="q-block-body">
+                <select class="text-in" id="r6">
+                  <option value="">— Select heading —</option>
+                  <option value="i">i</option><option value="ii">ii</option><option value="iii">iii</option>
+                  <option value="iv">iv</option><option value="v">v</option><option value="vi">vi</option><option value="vii">vii</option>
+                </select>
+              </div>
+            </div>
+            <div class="q-block mt-10" id="qblock-r7">
+              <div class="q-block-head"><div class="q-num-badge">7</div><span class="q-type-tag">Matching Heading — Paragraph F</span></div>
+              <div class="q-block-body">
+                <select class="text-in" id="r7">
+                  <option value="">— Select heading —</option>
+                  <option value="i">i</option><option value="ii">ii</option><option value="iii">iii</option>
+                  <option value="iv">iv</option><option value="v">v</option><option value="vi">vi</option><option value="vii">vii</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="instruction-box mt-8"><strong>Questions 8–10 · Short Answer</strong><br>Answer using NO MORE THAN THREE WORDS from the passage.</div>
+          <div class="q-block" id="qblock-r8">
+            <div class="q-block-head"><div class="q-num-badge">8</div><span class="q-type-tag">Short Answer</span></div>
+            <div class="q-block-body">
+              <p class="q-text">What nerve serves as the primary communication highway between the gut and the brain?</p>
+              <input class="text-in" id="r8" placeholder="Your answer (max 3 words)...">
+            </div>
+          </div>
+          <div class="q-block" id="qblock-r9">
+            <div class="q-block-head"><div class="q-num-badge">9</div><span class="q-type-tag">Short Answer</span></div>
+            <div class="q-block-body">
+              <p class="q-text">What term is used in the passage to describe an imbalance in the gut microbial community?</p>
+              <input class="text-in" id="r9" placeholder="Your answer (max 3 words)...">
+            </div>
+          </div>
+          <div class="q-block" id="qblock-r10">
+            <div class="q-block-head"><div class="q-num-badge">10</div><span class="q-type-tag">Short Answer</span></div>
+            <div class="q-block-body">
+              <p class="q-text">Which diet is specifically mentioned as having a favourable effect on the microbial profile?</p>
+              <input class="text-in" id="r10" placeholder="Your answer (max 3 words)...">
+            </div>
+          </div>
+
+          <div class="instruction-box mt-8"><strong>Questions 11–13 · Multiple Choice</strong><br>Choose the best answer A, B, C, or D.</div>
+          <div class="q-block" id="qblock-r11">
+            <div class="q-block-head"><div class="q-num-badge">11</div><span class="q-type-tag">Multiple Choice</span></div>
+            <div class="q-block-body">
+              <p class="q-text">According to the passage, what was an unintended consequence of widespread antibiotic use?</p>
+              <div class="opts">
+                <label class="opt"><input type="radio" name="r11" value="A"> A) The emergence of new bacterial species</label>
+                <label class="opt"><input type="radio" name="r11" value="B"> B) Disruption of co-evolved microbial communities</label>
+                <label class="opt"><input type="radio" name="r11" value="C"> C) A reduction in human genetic diversity</label>
+                <label class="opt"><input type="radio" name="r11" value="D"> D) Elimination of the germ theory of disease</label>
+              </div>
+            </div>
+          </div>
+          <div class="q-block" id="qblock-r12">
+            <div class="q-block-head"><div class="q-num-badge">12</div><span class="q-type-tag">Multiple Choice</span></div>
+            <div class="q-block-body">
+              <p class="q-text">FMT has been proven highly effective for treating which condition?</p>
+              <div class="opts">
+                <label class="opt"><input type="radio" name="r12" value="A"> A) Parkinson's disease</label>
+                <label class="opt"><input type="radio" name="r12" value="B"> B) Autism spectrum disorder</label>
+                <label class="opt"><input type="radio" name="r12" value="C"> C) Recurrent Clostridioides difficile infections</label>
+                <label class="opt"><input type="radio" name="r12" value="D"> D) Type 2 diabetes</label>
+              </div>
+            </div>
+          </div>
+          <div class="q-block" id="qblock-r13">
+            <div class="q-block-head"><div class="q-num-badge">13</div><span class="q-type-tag">Multiple Choice</span></div>
+            <div class="q-block-body">
+              <p class="q-text">Which best describes the author's overall stance on microbiome research?</p>
+              <div class="opts">
+                <label class="opt"><input type="radio" name="r13" value="A"> A) Dismissive — the research is largely unproven</label>
+                <label class="opt"><input type="radio" name="r13" value="B"> B) Cautiously optimistic — promising but requiring careful interpretation</label>
+                <label class="opt"><input type="radio" name="r13" value="C"> C) Enthusiastically supportive — the field has already transformed medicine</label>
+                <label class="opt"><input type="radio" name="r13" value="D"> D) Neutral — no evaluative stance is expressed</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exam-footer">
+      <div class="q-matrix" id="matrix-r"></div>
+      <button class="btn btn-primary" onclick="submitReading()">Submit Reading →</button>
+    </div>
+  </div>
+
+  <div id="screen-writing" class="screen flex-screen">
+    <div class="exam-nav">
+      <div class="exam-nav-left">
+        <span class="section-badge">✍️ Writing</span>
+        <span class="exam-section-name">Task 1 &amp; Task 2</span>
+      </div>
+      <div class="timer" id="timer-writing">⏱ 60:00</div>
+    </div>
+
+    <div class="writing-shell">
+      <div class="prompt-pane">
+        <div class="prompt-label">Task 1 · Graph Description</div>
+        <div class="prompt-box">
+          <strong>Task 1 Prompt</strong>
+          The bar chart below shows the percentage of households in four countries that owned at least one car in 2000, 2010, and 2020. <strong>Summarise the information</strong> by selecting and reporting the main features, and make comparisons where relevant. Write at least <strong>150 words</strong>.
+        </div>
+        <table class="data-tbl">
+          <thead><tr><th>Country</th><th>2000</th><th>2010</th><th>2020</th></tr></thead>
+          <tbody>
+            <tr><td>UK</td><td>72%</td><td>78%</td><td>83%</td></tr>
+            <tr><td>Australia</td><td>85%</td><td>88%</td><td>91%</td></tr>
+            <tr><td>Japan</td><td>68%</td><td>70%</td><td>69%</td></tr>
+            <tr><td>Brazil</td><td>32%</td><td>48%</td><td>62%</td></tr>
+          </tbody>
+        </table>
+
+        <div class="prompt-label mt-24">Task 2 · Academic Essay</div>
+        <div class="prompt-box">
+          <strong>Task 2 Prompt</strong>
+          <em>Some people believe that the most important quality a leader can have is the ability to make difficult decisions. Others feel that the ability to inspire and motivate people is more important.</em><br><br>
+          <strong>Discuss both views and give your own opinion.</strong> Write at least <strong>250 words</strong>.
+        </div>
+      </div>
+
+      <div class="essay-pane">
+        <div>
+          <div class="prompt-label">Task 1 Response</div>
+          <textarea class="essay-area" id="w1" placeholder="Write your Task 1 response here (minimum 150 words)..." oninput="updateWC('w1','wc1')"></textarea>
+          <div class="word-ct" id="wc1">0 words · Target: 150–200 words</div>
+        </div>
+        <div>
+          <div class="prompt-label">Task 2 Response</div>
+          <textarea class="essay-area" id="w2" style="min-height:300px" placeholder="Write your Task 2 essay here (minimum 250 words)..." oninput="updateWC('w2','wc2')"></textarea>
+          <div class="word-ct" id="wc2">0 words · Target: 250–300+ words</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exam-footer">
+      <span class="footer-note">Writing is not auto-graded — word counts are shown in results.</span>
+      <button class="btn btn-primary" onclick="submitWriting()">Submit Writing →</button>
+    </div>
+  </div>
+
+  <div id="screen-speaking" class="screen flex-screen">
+    <div class="exam-nav">
+      <div class="exam-nav-left">
+        <span class="section-badge">🗣️ Speaking</span>
+        <span class="exam-section-name">Parts 1, 2 &amp; 3</span>
+      </div>
+      <div class="speaking-timer-note">11–14 min · Self-assessed</div>
+    </div>
+
+    <div class="single-col overflow-auto-flex">
+      <div class="speaking-wrap">
+        <div class="speak-card">
+          <div class="speak-part-badge">Part 1 · Introduction &amp; Interview</div>
+          <p class="speak-card-instruction">Answer these questions as you would in the exam. Write notes or full answers below.</p>
+          <p class="q-text"><strong>1.</strong> Can you tell me about where you currently live?</p>
+          <textarea class="speak-area mb-14" placeholder="Your answer..."></textarea>
+          <p class="q-text"><strong>2.</strong> Do you prefer spending time alone or with other people? Why?</p>
+          <textarea class="speak-area mb-14" placeholder="Your answer..."></textarea>
+          <p class="q-text"><strong>3.</strong> How important is technology in your daily life?</p>
+          <textarea class="speak-area" placeholder="Your answer..."></textarea>
+        </div>
+
+        <div class="speak-card">
+          <div class="speak-part-badge">Part 2 · Individual Long Turn</div>
+          <p class="speak-card-instruction-light">You have 1 minute to prepare, then speak for 1–2 minutes on the topic below.</p>
+          <div class="cue-box">
+            <h4>Describe a time when you learned something new.</h4>
+            <p class="cue-instruction">You should say:</p>
+            <ul>
+              <li>What you learned</li>
+              <li>When and where you learned it</li>
+              <li>How you learned it</li>
+              <li>Why this experience was significant to you</li>
+            </ul>
+          </div>
+          <textarea class="speak-area h-120" placeholder="Write your notes or full response here..."></textarea>
+        </div>
+
+        <div class="speak-card">
+          <div class="speak-part-badge">Part 3 · Two-Way Discussion</div>
+          <p class="speak-card-instruction">These questions explore the topic in more depth. Give extended, thoughtful answers.</p>
+          <p class="q-text"><strong>1.</strong> Do you think formal education is the best way to learn, or are there better alternatives?</p>
+          <textarea class="speak-area mb-14" placeholder="Your answer..."></textarea>
+          <p class="q-text"><strong>2.</strong> How has technology changed the way people learn compared to previous generations?</p>
+          <textarea class="speak-area mb-14" placeholder="Your answer..."></textarea>
+          <p class="q-text"><strong>3.</strong> Some people say that lifelong learning is essential in modern society. Do you agree?</p>
+          <textarea class="speak-area" placeholder="Your answer..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="exam-footer">
+      <span class="footer-note">Speaking is self-assessed — review your answers against IELTS band descriptors.</span>
+      <button class="btn btn-primary" onclick="submitSpeaking()">Finish Speaking →</button>
+    </div>
+  </div>
+
+  <div id="screen-results" class="screen">
+    <nav class="top-nav">
+      <div class="logo">Band<em>Ready</em></div>
+      <div class="nav-links"><a onclick="goHome()">← New Test</a></div>
+    </nav>
+    <div class="results-wrap">
+      <div class="results-hero-card">
+        <div class="band-lbl">Your Estimated Band Score</div>
+        <div class="band-num" id="result-band">—</div>
+        <div class="band-desc" id="result-desc"></div>
+      </div>
+      <div class="score-cards" id="score-cards"></div>
+      <div id="review-container"></div>
+      <div class="results-action-row">
+        <button class="btn btn-primary btn-lg" onclick="goHome()">Take Another Test</button>
+        <button class="btn btn-outline btn-lg" onclick="startTest()">Choose Module</button>
+      </div>
+    </div>
+    <footer>© 2025 <span>BandReady</span> — Free IELTS Mock Test Platform.</footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
