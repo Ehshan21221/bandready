@@ -94,25 +94,41 @@
   </div>
 
   <div id="screen-listening" class="screen flex-screen">
-    <div class="exam-nav">
-      <div class="exam-nav-left">
-        <span class="section-badge">🎧 Listening</span>
-        <span class="exam-section-name">Sections 1 &amp; 2 — Social Contexts</span>
-      </div>
-      <div class="timer-wrapper">
-        <div class="timer" id="timer-listening">⏱ 30:00</div>
-      </div>
+  <div class="exam-nav">
+    <div class="exam-nav-left">
+      <span class="section-badge">🎧 Listening</span>
+      <span class="exam-section-name">Sections 1 &amp; 2 — Social Contexts</span>
     </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="timer" id="timer-listening">⏱ 30:00</div>
+    </div>
+  </div>
 
-    <div class="single-col">
-      <div class="single-inner">
-        <div class="section-header-banner">
-          <strong class="mono-label">SECTION 1</strong>
-          <span class="section-subtext">A phone conversation about booking a sports centre</span>
+  <div class="single-col">
+    <div class="single-inner">
+
+      <!-- SECTION 1 -->
+      <div style="background:var(--navy);color:#fff;border-radius:8px;padding:12px 18px">
+        <strong style="font-family:var(--mono);font-size:.78rem;letter-spacing:1px">SECTION 1</strong>
+        <span style="font-size:.88rem;color:rgba(255,255,255,.7);margin-left:10px">A phone conversation about booking a sports centre</span>
+      </div>
+
+      <div class="audio-warning" id="warn-s1">⚠️ Please listen to the recording before answering. In a real IELTS test you cannot read the transcript first.</div>
+
+      <!-- AUDIO PLAYER 1 -->
+      <div class="audio-player">
+        <button class="play-btn" id="play-s1" onclick="playSection(1)" title="Play recording">▶</button>
+        <div class="audio-progress">
+          <div class="audio-progress-bar"><div class="audio-progress-fill" id="prog-s1"></div></div>
+          <div class="audio-status" id="status-s1">Press ▶ to play Section 1 recording</div>
         </div>
+        <button class="btn btn-sm" style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.2);font-size:.75rem" onclick="replaySection(1)">↺ Replay</button>
+      </div>
 
+      <!-- Transcript (hidden by default) -->
+      <div class="transcript-hidden" id="transcript-s1">
         <div class="transcript-box">
-          <div class="transcript-header">📝 Audio Transcript — Section 1</div>
+          <div class="transcript-header">📝 Transcript — revealed after listening</div>
           <strong>Receptionist:</strong> Hello, Riverside Sports Centre. How can I help you?<br>
           <strong>Caller:</strong> Hi, I'd like to book a badminton court for Saturday morning, please.<br>
           <strong>Receptionist:</strong> Of course. Can I take your name?<br>
@@ -127,132 +143,152 @@
           <strong>Caller:</strong> Can I pay by card when we arrive?<br>
           <strong>Receptionist:</strong> Absolutely. All major cards accepted. Your booking reference is RS-4492.
         </div>
+      </div>
 
-        <div class="q-block" id="qblock-l1">
-          <div class="q-block-head"><div class="q-num-badge">1</div><span class="q-type-tag">Multiple Choice</span></div>
-          <div class="q-block-body">
-            <p class="q-text">What time does Ahmed book the badminton court?</p>
-            <div class="opts">
-              <label class="opt"><input type="radio" name="l1" value="A"> A) 9:00 AM</label>
-              <label class="opt"><input type="radio" name="l1" value="B"> B) 10:30 AM</label>
-              <label class="opt"><input type="radio" name="l1" value="C"> C) 12:00 noon</label>
-              <label class="opt"><input type="radio" name="l1" value="D"> D) 11:00 AM</label>
-            </div>
+      <!-- Q1 -->
+      <div class="q-block" id="qblock-l1">
+        <div class="q-block-head"><div class="q-num-badge">1</div><span class="q-type-tag">Multiple Choice</span></div>
+        <div class="q-block-body">
+          <p class="q-text">What time does Ahmed book the badminton court?</p>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="l1" value="A"> A) 9:00 AM</label>
+            <label class="opt"><input type="radio" name="l1" value="B"> B) 10:30 AM</label>
+            <label class="opt"><input type="radio" name="l1" value="C"> C) 12:00 noon</label>
+            <label class="opt"><input type="radio" name="l1" value="D"> D) 11:00 AM</label>
           </div>
         </div>
+      </div>
 
-        <div class="q-block" id="qblock-l2">
-          <div class="q-block-head"><div class="q-num-badge">2</div><span class="q-type-tag">Fill in the Blank</span></div>
-          <div class="q-block-body">
-            <p class="q-text">The booking fee for the court is £<input class="inline-in" id="l2" placeholder="?"> per hour.</p>
+      <div class="q-block" id="qblock-l2">
+        <div class="q-block-head"><div class="q-num-badge">2</div><span class="q-type-tag">Fill in the Blank</span></div>
+        <div class="q-block-body">
+          <p class="q-text">The booking fee for the court is £<input class="inline-in" id="l2" placeholder="?"> per hour.</p>
+        </div>
+      </div>
+
+      <div class="q-block" id="qblock-l3">
+        <div class="q-block-head"><div class="q-num-badge">3</div><span class="q-type-tag">Fill in the Blank</span></div>
+        <div class="q-block-body">
+          <p class="q-text">The postcode of the sports centre is <input class="inline-in" id="l3" style="width:140px" placeholder="?">.</p>
+        </div>
+      </div>
+
+      <div class="q-block" id="qblock-l4">
+        <div class="q-block-head"><div class="q-num-badge">4</div><span class="q-type-tag">Multiple Choice</span></div>
+        <div class="q-block-body">
+          <p class="q-text">What is Ahmed's booking reference number?</p>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="l4" value="A"> A) RS-4294</label>
+            <label class="opt"><input type="radio" name="l4" value="B"> B) RS-4492</label>
+            <label class="opt"><input type="radio" name="l4" value="C"> C) RV-4492</label>
+            <label class="opt"><input type="radio" name="l4" value="D"> D) RS-4942</label>
           </div>
         </div>
+      </div>
 
-        <div class="q-block" id="qblock-l3">
-          <div class="q-block-head"><div class="q-num-badge">3</div><span class="q-type-tag">Fill in the Blank</span></div>
-          <div class="q-block-body">
-            <p class="q-text">The postcode of the sports centre is <input class="inline-in" id="l3" style="width:140px" placeholder="?">.</p>
-          </div>
+      <!-- SECTION 2 -->
+      <div style="background:var(--navy);color:#fff;border-radius:8px;padding:12px 18px;margin-top:8px">
+        <strong style="font-family:var(--mono);font-size:.78rem;letter-spacing:1px">SECTION 2</strong>
+        <span style="font-size:.88rem;color:rgba(255,255,255,.7);margin-left:10px">A community talk about a new recycling initiative</span>
+      </div>
+
+      <div class="audio-warning" id="warn-s2">⚠️ Please listen to the recording before answering.</div>
+
+      <!-- AUDIO PLAYER 2 -->
+      <div class="audio-player">
+        <button class="play-btn" id="play-s2" onclick="playSection(2)" title="Play recording">▶</button>
+        <div class="audio-progress">
+          <div class="audio-progress-bar"><div class="audio-progress-fill" id="prog-s2"></div></div>
+          <div class="audio-status" id="status-s2">Press ▶ to play Section 2 recording</div>
         </div>
+        <button class="btn btn-sm" style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.2);font-size:.75rem" onclick="replaySection(2)">↺ Replay</button>
+      </div>
 
-        <div class="q-block" id="qblock-l4">
-          <div class="q-block-head"><div class="q-num-badge">4</div><span class="q-type-tag">Multiple Choice</span></div>
-          <div class="q-block-body">
-            <p class="q-text">What is Ahmed's booking reference number?</p>
-            <div class="opts">
-              <label class="opt"><input type="radio" name="l4" value="A"> A) RS-4294</label>
-              <label class="opt"><input type="radio" name="l4" value="B"> B) RS-4492</label>
-              <label class="opt"><input type="radio" name="l4" value="C"> C) RV-4492</label>
-              <label class="opt"><input type="radio" name="l4" value="D"> D) RS-4942</label>
-            </div>
-          </div>
-        </div>
-
-        <div class="section-header-banner mt-8">
-          <strong class="mono-label">SECTION 2</strong>
-          <span class="section-subtext">A community talk about a new recycling initiative</span>
-        </div>
-
+      <!-- Transcript 2 (hidden) -->
+      <div class="transcript-hidden" id="transcript-s2">
         <div class="transcript-box">
-          <div class="transcript-header">📝 Audio Transcript — Section 2</div>
-          <strong>Speaker:</strong> Good evening, everyone. Thank you for coming to our monthly Green Community meeting. Tonight I want to talk about our new recycling initiative — how residents in Oakdale can reduce household waste by up to 60%.<br><br>
+          <div class="transcript-header">📝 Transcript — revealed after listening</div>
+          Good evening, everyone. Thank you for coming to our monthly Green Community meeting. Tonight I want to talk about our new recycling initiative — how residents in Oakdale can reduce household waste by up to 60 percent.<br><br>
           First, the council has placed new blue bins outside the library, the post office, and the train station for glass recycling only. Please do not put plastic in these. Food waste should go in the brown bins, collected every Tuesday and Friday.<br><br>
           We've also launched a composting programme. You can pick up a free home composting kit from the council offices on Bridge Street — open Monday to Thursday, 9 to 5. The kits include a compost bin, instructions, and a guide on what can and cannot be composted.<br><br>
           Finally, our electronics collection day is on the 15th of next month in the community hall car park, from 8 AM to 2 PM. Old phones, laptops, cables — all accepted. You'll receive a tax receipt if you donate.
         </div>
+      </div>
 
-        <div class="q-block" id="qblock-l5">
-          <div class="q-block-head"><div class="q-num-badge">5</div><span class="q-type-tag">Multiple Choice</span></div>
-          <div class="q-block-body">
-            <p class="q-text">The blue bins placed around Oakdale are intended for:</p>
-            <div class="opts">
-              <label class="opt"><input type="radio" name="l5" value="A"> A) Plastic recycling</label>
-              <label class="opt"><input type="radio" name="l5" value="B"> B) Glass recycling only</label>
-              <label class="opt"><input type="radio" name="l5" value="C"> C) Mixed recyclables</label>
-              <label class="opt"><input type="radio" name="l5" value="D"> D) Food waste</label>
-            </div>
-          </div>
-        </div>
-
-        <div class="q-block" id="qblock-l6">
-          <div class="q-block-head"><div class="q-num-badge">6</div><span class="q-type-tag">Fill in the Blank</span></div>
-          <div class="q-block-body">
-            <p class="q-text">Food waste is collected every <input class="inline-in" id="l6" style="width:190px" placeholder="days of the week"> each week.</p>
-          </div>
-        </div>
-
-        <div class="q-block" id="qblock-l7">
-          <div class="q-block-head"><div class="q-num-badge">7</div><span class="q-type-tag">Fill in the Blank</span></div>
-          <div class="q-block-body">
-            <p class="q-text">The composting kits are available from the council offices on <input class="inline-in" id="l7" style="width:140px" placeholder="?"> Street.</p>
-          </div>
-        </div>
-
-        <div class="q-block" id="qblock-l8">
-          <div class="q-block-head"><div class="q-num-badge">8</div><span class="q-type-tag">Multiple Choice</span></div>
-          <div class="q-block-body">
-            <p class="q-text">The electronics collection day takes place at:</p>
-            <div class="opts">
-              <label class="opt"><input type="radio" name="l8" value="A"> A) The library</label>
-              <label class="opt"><input type="radio" name="l8" value="B"> B) Bridge Street council offices</label>
-              <label class="opt"><input type="radio" name="l8" value="C)"></label> C) The community hall car park
-              <label class="opt"><input type="radio" name="l8" value="D"> D) The train station</label>
-            </div>
-          </div>
-        </div>
-
-        <div class="q-block" id="qblock-l9">
-          <div class="q-block-head"><div class="q-num-badge">9</div><span class="q-type-tag">True / False / Not Given</span></div>
-          <div class="q-block-body">
-            <p class="q-text">Donors at the electronics collection day will receive a tax receipt.</p>
-            <div class="opts">
-              <label class="opt"><input type="radio" name="l9" value="TRUE"> TRUE</label>
-              <label class="opt"><input type="radio" name="l9" value="FALSE"> FALSE</label>
-              <label class="opt"><input type="radio" name="l9" value="NG"> NOT GIVEN</label>
-            </div>
-          </div>
-        </div>
-
-        <div class="q-block" id="qblock-l10">
-          <div class="q-block-head"><div class="q-num-badge">10</div><span class="q-type-tag">Multiple Choice</span></div>
-          <div class="q-block-body">
-            <p class="q-text">The speaker claims the new recycling initiative can reduce household waste by up to:</p>
-            <div class="opts">
-              <label class="opt"><input type="radio" name="l10" value="A"> A) 40%</label>
-              <label class="opt"><input type="radio" name="l10" value="B"> B) 50%</label>
-              <label class="opt"><input type="radio" name="l10" value="C"> C) 60%</label>
-              <label class="opt"><input type="radio" name="l10" value="D"> D) 70%</label>
-            </div>
+      <!-- Q5-10 -->
+      <div class="q-block" id="qblock-l5">
+        <div class="q-block-head"><div class="q-num-badge">5</div><span class="q-type-tag">Multiple Choice</span></div>
+        <div class="q-block-body">
+          <p class="q-text">The blue bins placed around Oakdale are intended for:</p>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="l5" value="A"> A) Plastic recycling</label>
+            <label class="opt"><input type="radio" name="l5" value="B"> B) Glass recycling only</label>
+            <label class="opt"><input type="radio" name="l5" value="C"> C) Mixed recyclables</label>
+            <label class="opt"><input type="radio" name="l5" value="D"> D) Food waste</label>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="exam-footer">
-      <div class="q-matrix" id="matrix-l"></div>
-      <button class="btn btn-primary" onclick="submitListening()">Submit Listening →</button>
+      <div class="q-block" id="qblock-l6">
+        <div class="q-block-head"><div class="q-num-badge">6</div><span class="q-type-tag">Fill in the Blank</span></div>
+        <div class="q-block-body">
+          <p class="q-text">Food waste is collected every <input class="inline-in" id="l6" style="width:190px" placeholder="days of the week"> each week.</p>
+        </div>
+      </div>
+
+      <div class="q-block" id="qblock-l7">
+        <div class="q-block-head"><div class="q-num-badge">7</div><span class="q-type-tag">Fill in the Blank</span></div>
+        <div class="q-block-body">
+          <p class="q-text">The composting kits are available from the council offices on <input class="inline-in" id="l7" style="width:140px" placeholder="?"> Street.</p>
+        </div>
+      </div>
+
+      <div class="q-block" id="qblock-l8">
+        <div class="q-block-head"><div class="q-num-badge">8</div><span class="q-type-tag">Multiple Choice</span></div>
+        <div class="q-block-body">
+          <p class="q-text">The electronics collection day takes place at:</p>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="l8" value="A"> A) The library</label>
+            <label class="opt"><input type="radio" name="l8" value="B"> B) Bridge Street council offices</label>
+            <label class="opt"><input type="radio" name="l8" value="C"> C) The community hall car park</label>
+            <label class="opt"><input type="radio" name="l8" value="D"> D) The train station</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-block" id="qblock-l9">
+        <div class="q-block-head"><div class="q-num-badge">9</div><span class="q-type-tag">True / False / Not Given</span></div>
+        <div class="q-block-body">
+          <p class="q-text">Donors at the electronics collection day will receive a tax receipt.</p>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="l9" value="TRUE"> TRUE</label>
+            <label class="opt"><input type="radio" name="l9" value="FALSE"> FALSE</label>
+            <label class="opt"><input type="radio" name="l9" value="NG"> NOT GIVEN</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-block" id="qblock-l10">
+        <div class="q-block-head"><div class="q-num-badge">10</div><span class="q-type-tag">Multiple Choice</span></div>
+        <div class="q-block-body">
+          <p class="q-text">The speaker claims the new recycling initiative can reduce household waste by up to:</p>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="l10" value="A"> A) 40%</label>
+            <label class="opt"><input type="radio" name="l10" value="B"> B) 50%</label>
+            <label class="opt"><input type="radio" name="l10" value="C"> C) 60%</label>
+            <label class="opt"><input type="radio" name="l10" value="D"> D) 70%</label>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
+
+  <div class="exam-footer">
+    <div class="q-matrix" id="matrix-l"></div>
+    <button class="btn btn-primary" onclick="submitListening()">Submit Listening →</button>
+  </div>
+</div>
 
   <div id="screen-reading" class="screen flex-screen">
     <div class="exam-nav">
