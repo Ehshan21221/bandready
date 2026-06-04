@@ -368,3 +368,127 @@ document.addEventListener('input', function(e) {
 });
 
 window.addEventListener('load', loadSavedProgress);
+
+// ══════════════════════════════════════
+// TEXT-TO-SPEECH ENGINE
+// ══════════════════════════════════════
+const TTS_SCRIPTS = {
+  1: `Receptionist: Hello, Riverside Sports Centre. How can I help you?
+Caller: Hi, I'd like to book a badminton court for Saturday morning, please.
+Receptionist: Of course. Can I take your name?
+Caller: It's Ahmed Hassan.
+Receptionist: And what time were you thinking? We have 9 AM, 10:30 AM, or noon available.
+Caller: 10:30 would be great, thanks. How many courts are available at that time?
+Receptionist: We have three courts available. The booking fee is 8 pounds per hour per court.
+Caller: Perfect. We'll take court number 2. We'll be four players. Do you hire out rackets?
+Receptionist: Yes, racket hire is 2 pounds each. Shuttlecocks are included. You'll need a valid membership card or pay a 5 pound guest fee per person.
+Caller: We're all members. Is there parking on-site?
+Receptionist: Yes, free parking for members in the east car park. The postcode is B, R, 4, 7, W, Q.
+Caller: Can I pay by card when we arrive?
+Receptionist: Absolutely. All major cards accepted. Your booking reference is R, S, dash, 4, 4, 9, 2.`,
+
+  2: `Good evening, everyone. Thank you for coming to our monthly Green Community meeting. Tonight I want to talk about our new recycling initiative — how residents in Oakdale can reduce household waste by up to 60 percent.
+
+First, the council has placed new blue bins outside the library, the post office, and the train station. These are for glass recycling only. Please do not put plastic in these bins. Food waste should go in the brown bins, which are collected every Tuesday and Friday.
+
+We have also launched a composting programme. You can pick up a free home composting kit from the council offices on Bridge Street — that is open Monday to Thursday, 9 to 5. The kits include a compost bin, instructions, and a guide on what can and cannot be composted.
+
+Finally, our electronics collection day is on the 15th of next month in the community hall car park, from 8 AM to 2 PM. Old phones, laptops, cables — all accepted. You will receive a tax receipt if you donate.`
+};
+
+let ttsActive = null;
+let ttsSection = null;
+
+function playSection(num) {
+  // Cancel any ongoing speech
+  window.speechSynthesis.cancel();
+
+  const btn = document.getElementById('play-s' + num);
+  const status = document.getElementById('status-s' + num);
+  const prog = document.getElementById('prog-s' + num);
+  const warn = document.getElementById('warn-s' + num);
+
+  if (!window.speechSynthesis) {
+    status.textContent = 'Speech not supported in this browser. Use Chrome or Edge.';
+    warn.classList.add('show');
+    warn.textContent = '⚠️ Your browser does not support speech synthesis. Try Chrome or Edge.';
+    document.getElementById('transcript-s' + num).style.display = 'block';
+    return;
+  }
+
+  const utterance = new SpeechSynthesisUtterance(TTS_SCRIPTS[num]);
+  utterance.rate = 0.88;
+  utterance.pitch = 1.0;
+  utterance.lang = 'en-GB';
+
+  // Try to pick a good English voice
+  const voices = window.speechSynthesis.getVoices();
+  const preferred = voices.find(v => v.lang === 'en-GB') ||
+                    voices.find(v => v.lang.startsWith('en')) ||
+                    voices[0];
+  if (preferred) utterance.voice = preferred;
+
+  btn.textContent = '⏸';
+  btn.onclick = () => pauseSection(num);
+  status.textContent = '🔊 Playing — listen carefully...';
+  warn.classList.remove('show');
+  ttsSection = num;
+
+  // Animate progress bar (estimate duration from word count)
+  const wordCount = TTS_SCRIPTS[num].split(/\s+/).length;
+  const estimatedMs = (wordCount / utterance.rate) * 420;
+  let start = Date.now();
+  const progInterval = setInterval(() => {
+    const pct = Math.min(((Date.now() - start) / estimatedMs) * 100, 98);
+    prog.style.width = pct + '%';
+  }, 200);
+
+  utterance.onend = () => {
+    clearInterval(progInterval);
+    prog.style.width = '100%';
+    btn.textContent = '✓';
+    btn.disabled = true;
+    status.textContent = '✓ Recording finished — now answer the questions below.';
+    // Reveal transcript after audio ends
+    const tr = document.getElementById('transcript-s' + num);
+    if (tr) { tr.style.display = 'block'; }
+    ttsActive = null;
+  };
+
+  utterance.onerror = () => {
+    clearInterval(progInterval);
+    status.textContent = 'Playback error. Transcript revealed below.';
+    document.getElementById('transcript-s' + num).style.display = 'block';
+  };
+
+  ttsActive = { utterance, progInterval };
+  window.speechSynthesis.speak(utterance);
+}
+
+function pauseSection(num) {
+  const btn = document.getElementById('play-s' + num);
+  const status = document.getElementById('status-s' + num);
+  if (window.speechSynthesis.paused) {
+    window.speechSynthesis.resume();
+    btn.textContent = '⏸';
+    status.textContent = '🔊 Playing...';
+  } else {
+    window.speechSynthesis.pause();
+    btn.textContent = '▶';
+    status.textContent = '⏸ Paused — press ▶ to resume';
+  }
+}
+
+function replaySection(num) {
+  window.speechSynthesis.cancel();
+  const btn = document.getElementById('play-s' + num);
+  btn.textContent = '▶';
+  btn.disabled = false;
+  btn.onclick = () => playSection(num);
+  document.getElementById('prog-s' + num).style.width = '0%';
+  document.getElementById('status-s' + num).textContent = 'Press ▶ to replay the recording';
+  playSection(num);
+}
+
+// Voices may load async on some browsers
+window.speechSynthesis.onvoiceschanged = () => {};
